@@ -1,6 +1,5 @@
 browser.storage.local.get().then(({ block }) => {
-  console.log(block);
-  if (Object.keys(block).length === 0) {
+  if (!block) {
     browser.storage.local.set({ block: [] });
   }
 });
