@@ -79,7 +79,9 @@ async function range(contents) {
 function clear(contents) {
   const list = [...contents.querySelectorAll("ul > li[class]")];
   list.forEach((post) => {
-    post.querySelector(".block").parentElement.remove();
-    post.querySelector(".imgbox").remove();
+    const block = post.querySelector(".block");
+    const box = post.querySelector(".imgbox");
+    if (block) block.remove();
+    if (box) box.remove();
   });
 }
