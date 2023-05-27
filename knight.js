@@ -41,24 +41,13 @@ async function range(contents) {
     blockButton.addEventListener("click", () => {
       if (blocked) {
         chrome.storage.local.set({ block: block.filter((u) => u !== user) });
-        try {
-          menu.remove();
-          box.remove();
-        } catch (e) {
-        } finally {
-          range(contents);
-        }
+        clear(contents);
+        range(contents);
       } else {
         block.push(user);
         browser.storage.local.set({ block });
-        try {
-          menu.remove();
-          box.remove();
-          range(contents);
-        } catch (e) {
-        } finally {
-          range(contents);
-        }
+        clear(contents);
+        range(contents);
       }
     });
     menu.append(blockButton);
@@ -81,5 +70,16 @@ async function range(contents) {
     } else {
       box.innerText = "차단된 유저입니다.";
     }
+  });
+}
+
+/**
+ * @param {HTMLElement} contents
+ */
+function clear(contents) {
+  const list = [...contents.querySelectorAll("ul > li[class]")];
+  list.forEach((post) => {
+    post.querySelector(".block").parentElement.remove();
+    post.querySelector(".imgbox").remove();
   });
 }
