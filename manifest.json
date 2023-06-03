@@ -14,8 +14,13 @@
       "id": "d7ms@outlook.kr"
     }
   },
-  "host_permissions": ["https://playentry.org/*"],
-  "permissions": ["storage", "unlimitedStorage", "clipboardWrite"],
+  "permissions": [
+    "<all_urls>",
+    "activeTab",
+    "storage",
+    "unlimitedStorage",
+    "clipboardWrite"
+  ],
   "content_scripts": [
     {
       "all_frames": true,

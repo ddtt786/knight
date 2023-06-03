@@ -4,23 +4,29 @@
 async function range(contents) {
   const block = (await browser.storage.local.get()).block;
   const list = [...contents.querySelectorAll("ul > li[class]")];
+
   //이미지 업로드 버튼
-  if (!contents.querySelector("#genimg")) {
-    const genimg = document.createElement("a");
-    genimg.id = "genimg";
-    genimg.role = "button";
-    genimg.addEventListener("click", () => {
-      upload().then((d) => {
-        navigator.clipboard.writeText(
-          `https://playentry.org/uploads/${d.id.slice(0, 2)}/${d.id.slice(
-            2,
-            4
-          )}/${d.id}.${d.ext}`
-        );
+  [...document.querySelectorAll("#Write")].forEach((writer, i) => {
+    const writebox = writer.parentElement.parentElement.parentElement;
+    if (!writebox.querySelector(".genimg")) {
+      console.log(writebox);
+      const genimg = document.createElement("a");
+      genimg.className = "genimg";
+      genimg.role = "button";
+      genimg.addEventListener("click", () => {
+        upload().then((d) => {
+          navigator.clipboard.writeText(
+            `https://playentry.org/uploads/${d.id.slice(0, 2)}/${d.id.slice(
+              2,
+              4
+            )}/${d.id}.${d.ext}`
+          );
+        });
       });
-    });
-    contents.querySelectorAll("div>a")[2].after(genimg);
-  }
+      console.log(writebox.querySelectorAll("div>div>a"));
+      writebox.querySelectorAll("div>div>a")[i == 0 ? 1 : 0].after(genimg);
+    }
+  });
 
   list.forEach((post) => {
     const link = post.querySelectorAll("div > a")[2];
