@@ -1,6 +1,6 @@
-browser.storage.local.get().then(({ block }) => {
+chrome.storage.local.get().then(({ block }) => {
   if (!block) {
-    browser.storage.local.set({ block: [] });
+    chrome.storage.local.set({ block: [] });
   }
 });
 

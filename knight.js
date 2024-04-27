@@ -2,7 +2,7 @@
  * @param {HTMLElement} contents
  */
 async function range(contents) {
-  const block = (await browser.storage.local.get()).block;
+  const block = (await chrome.storage.local.get()).block;
   const list = [...contents.querySelectorAll("ul > li[class]")];
 
   //이미지 업로드 버튼
@@ -16,10 +16,9 @@ async function range(contents) {
       genimg.addEventListener("click", () => {
         upload().then((d) => {
           navigator.clipboard.writeText(
-            `https://playentry.org/uploads/${d.id.slice(0, 2)}/${d.id.slice(
-              2,
-              4
-            )}/${d.id}.${d.ext}`
+            `playentry.org//uploads/${d.id.slice(0, 2)}/${d.id.slice(2, 4)}/${
+              d.id
+            }.${d.ext}`
           );
         });
       });
@@ -51,7 +50,7 @@ async function range(contents) {
         range(contents);
       } else {
         block.push(user);
-        browser.storage.local.set({ block });
+        chrome.storage.local.set({ block });
         clear(contents);
         range(contents);
       }
@@ -59,7 +58,7 @@ async function range(contents) {
     menu.append(blockButton);
 
     if (
-      !url.startsWith("https://playentry.org/uploads/") ||
+      !url.startsWith("http://playentry.org//uploads/") ||
       link.parentElement.querySelector("img")
     )
       return;
@@ -69,7 +68,7 @@ async function range(contents) {
     box.className = "imgbox";
     link.append(box);
     const image = document.createElement("img");
-    image.src = link.href;
+    image.src = link.href.replace("http://", "https://");
 
     if (!blocked) {
       box.append(image);
